@@ -15,8 +15,8 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs(timer.end).diff(
-		!timer.isRunning ? dayjs(timer.start) : dayjs().utc().format(mySQLFormat),
+	$: diff = dayjs.utc(timer.end).diff(
+		!timer.isRunning ? dayjs.utc(timer.start) : dayjs().utc().format(mySQLFormat),
 		'millisecond'
 	);
 	$: days = dayjs.duration(diff).days();
