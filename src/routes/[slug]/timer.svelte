@@ -15,10 +15,10 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs.utc(timer.end).diff(
-		!timer.isRunning ? dayjs.utc(timer.start) : dayjs().utc().format(mySQLFormat),
-		'millisecond'
+	$: diff = dayjs(timer.end).diff(
+		!timer.isRunning ? dayjs(timer.start) : dayjs().subtract(dayjs().utcOffset(), 'minute'),
 	);
+
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();
 	$: minutes = dayjs.duration(diff).minutes();
@@ -32,7 +32,7 @@
 					...timer,
 					isRunning: true
 				};
-			}, 1000);
+			}, 100);
 		}
 	};
 	onMount(() => {
