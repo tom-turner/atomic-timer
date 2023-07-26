@@ -7,6 +7,7 @@
 	import EditTimer from './edit-timer.svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
+	import Button from '../../components/button.svelte';
 
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
@@ -33,6 +34,8 @@
 			return res.json();
 		});
 
+		console.log(res.timers);
+
 		return res.timers;
 	};
 
@@ -56,7 +59,7 @@
 	};
 
 	const startTimer = (id, durationMs) => {
-		fetch(`/api/start-timer`, {
+		return fetch(`/api/start-timer`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -77,7 +80,7 @@
 	};
 
 	const stopTimer = (id, durationMs) => {
-		fetch(`/api/stop-timer`, {
+		return fetch(`/api/stop-timer`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -124,7 +127,7 @@
 <main class="flex flex-col items-center justify-between w-full h-screen space-y-8 p-8">
 	<div class="fixed inset-0 -z-50 bg-white">
 		<img
-			src={'https://source.unsplash.com/random/1920x1080?nature'}
+			src={'https://source.unsplash.com/random/1920x1080?landscape'}
 			class=" -z-40 w-full h-screen opacity-80 object-cover"
 			alt="random"
 		/>
@@ -146,24 +149,25 @@
 							<Timer {timer} />
 							<div class="flex w-full justify-evenly space-x-2 sm:space-x-0 flex-row sm:flex-col">
 								{#if timer.isRunning}
-									<button
-										on:click={() => stopTimer(timer.id, timer.durationMs)}
-										class="bg-yellow-400 hover:bg-yellow-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
-										>Stop</button
-									>
+									<Button
+										onClick={() => stopTimer(timer.id, timer.durationMs)}
+										className="bg-yellow-400 hover:bg-yellow-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
+										text="Stop"
+									/>
+								
 								{:else}
-									<button
-										on:click={() => startTimer(timer.id, timer.durationMs)}
-										class="bg-green-400 hover:bg-green-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
-										>Start</button
-									>
+									<Button
+										onClick={() => startTimer(timer.id, timer.durationMs)}
+										className="bg-green-400 hover:bg-green-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
+										text="Start"
+									/>
 								{/if}
 								<EditTimer {page} {timer} onSubmit={updateTimers} />
-								<button
-									on:click={() => deleteTimer(timer.id)}
-									class="bg-red-400 hover:bg-red-500 text-white my-auto w-full font-bold py-2 px-4 rounded"
-									>Delete</button
-								>
+								<Button
+									onClick={() => deleteTimer(timer.id)}
+									className="bg-red-400 hover:bg-red-500 text-white my-auto w-full font-bold py-2 px-4 rounded"
+									text="Delete"
+								/>
 							</div>
 						</div>
 					{/each}

@@ -6,6 +6,7 @@
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import Timer from './timer.svelte';
+	import Button from '../../components/button.svelte';
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
 
@@ -57,7 +58,12 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				timer,
+				timer: {
+					durationMs: timer.durationMs,
+					start: dayjs(timer.start).format(mySQLFormat),
+					end: dayjs(timer.end).format(mySQLFormat),
+					isRunning: timer.isRunning
+				},
 				slug,
 				pusherData: {
 					channel: slug,
@@ -111,11 +117,11 @@
 				<Timer {timer} />
 			</button>
 
-			<button
-				on:click={handleCreateTimer}
-				class="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded"
-				>Create</button
-			>
+			<Button
+				onClick={handleCreateTimer}
+				className="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded"
+				text="Create"
+			/>
 			<button
 				on:click={() => (showForm = false)}
 				class="bg-white hover:bg-gray-100 text-gray-800 border my-auto font-bold py-2 px-4 rounded"

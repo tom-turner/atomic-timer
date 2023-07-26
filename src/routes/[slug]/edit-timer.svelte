@@ -9,6 +9,7 @@
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import Timer from './timer.svelte';
+	import Button from '../../components/button.svelte';
 	dayjs.extend(utc);
 
 	const { slug } = page;
@@ -37,17 +38,29 @@
 			end: dayjs.utc().add(ms, 'milliseconds').format(mySQLFormat),
 			start: dayjs.utc().format(mySQLFormat)
 		};
+	} else {
+		timer = {
+			...timer,
+			durationMs: 0,
+			end: dayjs.utc().add(0, 'milliseconds').format(mySQLFormat),
+			start: dayjs.utc().format(mySQLFormat)
+		};
 	}
-
+	
 	const handleEditTimer = () => {
-		fetch(`/api/edit-timer`, {
+		return fetch(`/api/edit-timer`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				id: timer.id,
-				timer,
+				timer: {
+					durationMs: timer.durationMs,
+					start: dayjs(timer.start).format(mySQLFormat),
+					end: dayjs(timer.end).format(mySQLFormat),
+					isRunning: timer.isRunning
+				},
 				slug,
 				pusherData: {
 					channel: slug,
@@ -99,11 +112,11 @@
 			<Timer {timer} />
 		</button>
 
-		<button
-			on:click={handleEditTimer}
-			class="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded"
-			>Save</button
-		>
+		<Button
+			onClick={handleEditTimer}
+			className="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded"
+			text="Save"
+		/>
 		<button
 			on:click={() => (showForm = false)}
 			class="bg-white hover:bg-gray-100 text-gray-800 border my-auto font-bold py-2 px-4 rounded"
