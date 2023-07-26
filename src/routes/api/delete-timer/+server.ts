@@ -20,7 +20,7 @@ export async function POST({ request, cookies }) {
 		throw error(500, 'Something went wrong');
 	}
 
-	pusher.trigger(pusherData.channel, pusherData.event, {
+	await pusher.trigger(pusherData.channel, pusherData.event, {
 		timers
 	});
 

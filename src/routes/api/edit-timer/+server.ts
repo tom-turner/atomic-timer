@@ -36,7 +36,7 @@ export async function POST({ request }) {
 
 	const [timers] = await db.execute('SELECT * FROM timers WHERE pageId = ?', [page.id]);
 
-	pusher.trigger(pusherData.channel, pusherData.event, {
+	await pusher.trigger(pusherData.channel, pusherData.event, {
 		timers
 	});
 

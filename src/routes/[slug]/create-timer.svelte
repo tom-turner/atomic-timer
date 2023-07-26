@@ -52,7 +52,7 @@
 	}
 
 	const handleCreateTimer = () => {
-		fetch(`/api/create-timer`, {
+		return fetch(`/api/create-timer`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
