@@ -32,7 +32,8 @@ export async function POST({ request, cookies }) {
     )
     
     pusher.trigger(pusherData.channel, pusherData.event, {
-        timers
+        timers,
+        timestamp: Date.now(),
     });
     
     return json({

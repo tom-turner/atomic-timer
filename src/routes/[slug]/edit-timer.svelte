@@ -1,10 +1,12 @@
 <script>
     export let page
     export let onSubmit = (e) => {}
+    const mySQLFormat = 'YYYY-MM-DD HH:mm:ss'
+
+    export let timer;
     import dayjs from 'dayjs'
     import utc from 'dayjs/plugin/utc'
     import Timer from './timer.svelte'
-    const mySQLFormat = 'YYYY-MM-DD HH:mm:ss'
     dayjs.extend(utc);
 
     const {
@@ -13,12 +15,6 @@
     let showForm = false
     let isFocused = false
     let inputValue = 0
-    let timer = {
-        durationMs: 0,
-        start: dayjs.utc().format(mySQLFormat),
-        end: dayjs.utc().add(0, 'seconds').format(mySQLFormat),
-        isRunning: false,
-    }
     
     $: if(inputValue) {
         const value = inputValue?.toString().padStart(8, '0')
@@ -35,22 +31,16 @@
             end: dayjs.utc().add(ms, 'milliseconds').format(mySQLFormat),
             start: dayjs.utc().format(mySQLFormat),
         }
-    } else {
-        timer = {
-            ...timer,
-            durationMs: 0,
-            end: dayjs.utc().add(0, 'milliseconds').format(mySQLFormat),
-            start: dayjs.utc().format(mySQLFormat),
-        };
     }
 
-    const handleCreateTimer = () => {
-        fetch(`/api/create-timer`, {
+    const handleEditTimer = () => {
+        fetch(`/api/edit-timer`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                id: timer.id,
                 timer,
                 slug,
                 pusherData: {
@@ -58,15 +48,14 @@
                     event: 'update',
                 }
             })
-        }).then(async (res) => {
-            if(res.status !== 200) {
-                const body = await res.json()
-                return alert(body.message || res.statusText)
-            }
+        }).then((res) => {
+            if(res.status !== 200) return alert(res.statusText)
 
             return res.json()
         })
         .then((data) => {
+            if(data.error) return alert(data.error)
+
             onSubmit(data)
             showForm = false
         })
@@ -75,13 +64,11 @@
 
 </script>
 
-<div>
-    <button on:click={() => showForm = true} class="bg-sky-400 hover:bg-sky-500 mx-auto flex text-white my-auto font-bold py-2 px-4 rounded">Create New Timer</button>
+    <button on:click={() => showForm = true} class="bg-sky-400 hover:bg-sky-500 w-full text-white my-auto font-bold py-2 px-4 rounded">Edit</button>
 
-
-    <div class={`inset-0 fixed flex items-center justify-center w-full h-screen ${showForm ? '' : 'hidden'}`}>
-        <button class="fixed inset-0 bg-white opacity-50 w-full h-full"></button>
-        <div class="flex flex-col space-y-2 z-0">
+    <div class={`inset-0 fixed flex items-center justify-center w-full h-screen z-40 ${showForm ? '' : 'hidden'}`}>
+        <button class="fixed inset-0 bg-white opacity-50 w-full h-full z-40"></button>
+        <div class="flex flex-col space-y-2 z-40">
             <input 
                 id="timer-input"
                 on:focus={() => isFocused = true}
@@ -99,9 +86,7 @@
                 <Timer {timer} />
             </button>
             
-            <button on:click={handleCreateTimer} class="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded">Create</button>
+            <button on:click={handleEditTimer} class="bg-sky-400 hover:bg-sky-500 text-white my-auto font-bold py-2 px-4 rounded">Save</button>
             <button on:click={() => showForm = false} class="bg-white hover:bg-gray-100 text-gray-800 border my-auto font-bold py-2 px-4 rounded">Cancel</button>
         </div>
     </div>
-
-</div>

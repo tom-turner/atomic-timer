@@ -6,37 +6,42 @@ import pusher from '$lib/pushers';
 import mysql from 'mysql2/promise';
 
 export async function POST({ request, cookies }) {
-	const { timer, slug, pusherData } = await request.json()
+	const { id, slug, timer, pusherData } = await request.json()
 
-    if(!slug) {
+    if(!id) {
         throw error(400, 'Missing slug');
     }
 
+    console.log(id, slug, timer, pusherData)
+
     if(!timer || !timer.durationMs || !timer.start || !timer.end) {
-        throw error(400, 'Missing timer duration');
+        throw error(400, 'Missing timer');
     }
 
     const db = await mysql.createConnection(DATABASE_URL);
-    const [rows] = await db.execute(
-        'SELECT * FROM pages WHERE slug = ?',
-        [slug],
-    )
-    const page = rows?.[0];
 
-    if (!page) {
+   const [rows] = await db.execute(
+        'SELECT * FROM pages WHERE slug = ?',
+        [slug]
+    );
+
+    const page = rows[0]
+    console.log(page)
+
+    if(!page) {
         throw error(404, 'Page not found');
     }
 
-    const [inserted] = await db.execute(
-        'INSERT INTO timers (pageId, durationMs, start, end, isRunning) VALUES (?, ?, ?, ?, 0)',
-        [page.id, timer.durationMs, timer.start, timer.end],
-    )
+    await db.execute(
+        'UPDATE timers SET durationMs = ?, start = ?, end = ? WHERE id = ?',
+        [timer.durationMs, timer.start, timer.end, id]
+    );
 
     const [timers] = await db.execute(
         'SELECT * FROM timers WHERE pageId = ?',
-        [page.id],
-    )
-    
+        [page.id]
+    );
+
     pusher.trigger(pusherData.channel, pusherData.event, {
         timers,
     });
@@ -45,6 +50,5 @@ export async function POST({ request, cookies }) {
         status: 200,
         message: 'Timer created',
         timers: timers,
-        newTimer: inserted,
     })
 }

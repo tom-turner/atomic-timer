@@ -33,12 +33,13 @@ export async function POST({ request, cookies }) {
     )
     
     pusher.trigger(pusherData.channel, pusherData.event, {
-        timers
+        timers,
+        timestamp: Date.now(),
     });
     
     return json({
         status: 200,
         message: 'Timer started',
-        timers
+        timers,
     })
 }

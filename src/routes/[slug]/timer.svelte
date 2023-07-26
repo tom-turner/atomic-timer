@@ -2,6 +2,7 @@
     import dayjs from 'dayjs'
     import utc from 'dayjs/plugin/utc'
     import duration from "dayjs/plugin/duration";
+    import { onMount, beforeUpdate } from 'svelte';
     const mySQLFormat = 'YYYY-MM-DD HH:mm:ss'
     dayjs.extend(utc);
     dayjs.extend(duration);
@@ -21,48 +22,58 @@
     $: seconds = dayjs.duration(diff).seconds()
     $: milliseconds = dayjs.duration(diff).milliseconds()
     let interval;
-    $:{
-        if(isRunning){          
+    const run = () => {
+        if(timer.isRunning) {
             interval = setInterval(() => {
-                diff = dayjs(timer.end).diff(dayjs().utc().format(mySQLFormat), 'millisecond')
-            }, 100)
-        } else {
-            clearInterval(interval)
+                timer = {
+                    ...timer,
+                    isRunning: true,
+                }
+            }, 1000)    
         }
     }
-    
+    onMount(() => {
+        clearInterval(interval)
+        run()
+    })
+
+    beforeUpdate(() => {
+        clearInterval(interval)
+        run()
+    })
+
 </script>
     <div class="flex space-x-4 w-full justify-center">
         <div class="flex flex-col">
-            <div class="flex items-center justify-center bg-gray-200 shadow rounded-xl w-32 aspect-square">
-                <p class="text-6xl text-gray-800">{days}</p>
+            <div class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square">
+                <p class="text-4xl sm:text-6xl text-gray-800">{days}</p>
             </div>
-            <p class="text-center text-gray-800">Days</p>
+            <p class="text-sm sm:text-base text-center text-gray-800">Days</p>
         </div>
 
         <div class="flex flex-col">
-            <div class="flex items-center justify-center bg-gray-200 shadow rounded-xl w-32 aspect-square">
-                <p class="text-6xl text-gray-800">{hours}</p>
+            <div class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square">
+                <p class="text-4xl sm:text-6xl text-gray-800">{hours}</p>
             </div>
-            <p class="text-center text-gray-800">Hours</p>
+            <p class="text-sm sm:text-base text-center text-gray-800">Hours</p>
         </div>
 
         <div class="flex flex-col">
-            <div class="flex items-center justify-center bg-gray-200 shadow rounded-xl w-32 aspect-square">
-                <p class="text-6xl text-gray-800">{minutes}</p>
+            <div class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square">
+                <p class="text-4xl sm:text-6xl text-gray-800">{minutes}</p>
             </div>
-            <p class="text-center text-gray-800">Minutes</p>
+            <p class="text-sm sm:text-base text-center text-gray-800">Minutes</p>
         </div>
 
 
         <div class="flex flex-col">
-            <div class="flex relative items-center justify-center bg-gray-200 shadow rounded-xl w-32 aspect-square">
-                <p class="text-6xl text-gray-800">{seconds}</p>
+            <div class="flex relative items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square">
+                <p class="text-4xl sm:text-6xl text-gray-800">{seconds}</p>
                 {#if milliseconds}
                     <p class=" font-semibold text-gray-800 w-4 h-12">.{Math.abs(milliseconds).toString().split('').splice(0,1).join('')}</p>
                 {/if}
             </div>
-            <p class="text-center text-gray-800">Seconds</p>
+            <p class="text-sm sm:text-base text-center text-gray-800">Seconds</p>
         </div>
 
     </div>
