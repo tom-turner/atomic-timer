@@ -89,11 +89,11 @@
 >
 
 <div
-	class={`inset-0 fixed flex items-center justify-center w-full h-screen z-40 ${
+	class={`inset-0 fixed flex items-center justify-center w-full h-screen backdrop-blur z-40 ${
 		showForm ? '' : 'hidden'
 	}`}
 >
-	<button class="fixed inset-0 bg-white opacity-50 w-full h-full z-40" />
+	<button class="fixed inset-0 bg-white dark:bg-black opacity-50 dark:opacity-50 w-full h-full z-40" />
 	<div class="flex flex-col space-y-2 z-40">
 		<input
 			id="timer-input"
