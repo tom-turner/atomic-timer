@@ -4,7 +4,7 @@
 	import duration from 'dayjs/plugin/duration';
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
-	const utcFormat = 'YYYY-MM-DD HH:mm:ss.SSSZ';
+	const utcFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 	dayjs.extend(utc);
 	dayjs.extend(duration);
 
@@ -17,12 +17,12 @@
 
 	$: isRunning = timer.isRunning;
 	$: diff = dayjs(timer.end).diff(
-		!timer.isRunning ? dayjs(timer.start) : dayjs().utc().format(utcFormat),
+		!timer.isRunning ? dayjs(timer.start) : dayjs(),
 	);
 
 	console.log('start:',dayjs(timer.start), timer.start)
 	console.log('end:',dayjs(timer.end), timer.end)
-	console.log('now in utc:', dayjs().utc().format(utcFormat))
+	console.log('now in utc:', dayjs())
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();

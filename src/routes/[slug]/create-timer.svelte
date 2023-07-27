@@ -7,7 +7,7 @@
 	import utc from 'dayjs/plugin/utc';
 	import Timer from './timer.svelte';
 	import Button from '../../components/button.svelte';
-	const mySQLFormat = 'YYYY-MM-DD HH:mm:ssZ';
+	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
 
 	const { slug } = page;
