@@ -5,6 +5,7 @@
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
+	const utcFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 	dayjs.extend(utc);
 	dayjs.extend(duration);
 
@@ -31,11 +32,14 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs(timer.end).local().diff(
-		!timer.isRunning ? dayjs(timer.start).local() : getUTC(),
+	$: diff = dayjs(dayjs(timer.end).format(utcFormat)).diff(
+		!timer.isRunning ? dayjs(timer.start).format(utcFormat) : dayjs.utc().format(utcFormat),
 	);
 	
-	console.log(dayjs.utc(timer.end), dayjs.utc(timer.start), getUTC());
+	console.log('end:',dayjs(timer.end).format(utcFormat))
+	console.log('start:',dayjs(timer.start).format(utcFormat))
+	console.log('getUtc:',getUTC())
+	console.log('dayjs UTC:',dayjs.utc().format(utcFormat))
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();
