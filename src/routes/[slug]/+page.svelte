@@ -106,7 +106,7 @@
 	};
 
 	const handleEmbed = async () => {
-		const dark = Array.from(document.documentElement.classList).includes('dark')
+		const dark = Array.from(document.documentElement.classList).includes('dark');
 		const url = window.location.href + `/embed${dark ? '?dark=true' : ''}}`;
 		const iframe = `<iframe src="${url}" width="100%" height="100%" frameborder="0"></iframe>`;
 		await navigator.clipboard.writeText(iframe);
@@ -151,7 +151,9 @@
 			<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
 		{:then timers}
 			{#if timers?.length}
-				<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow">
+				<div
+					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
+				>
 					{#each timers as timer}
 						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
 							<Timer {timer} />
@@ -162,7 +164,6 @@
 										className="bg-yellow-400 hover:bg-yellow-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
 										text="Stop"
 									/>
-								
 								{:else}
 									<Button
 										onClick={() => startTimer(timer.id, timer.durationMs)}
@@ -184,14 +185,15 @@
 					<button
 						on:click={handleShare}
 						class="bg-sky-400 hover:bg-sky-500 mt-4 text-white font-bold py-2 px-4 rounded"
-						>Share</button>
+						>Share</button
+					>
 
-					<button on:click={handleEmbed} class="bg-indigo-400 hover:bg-indigo-500 mt-4 text-white font-bold py-2 px-4 rounded"
-						>Embed</button>
-
+					<button
+						on:click={handleEmbed}
+						class="bg-indigo-400 hover:bg-indigo-500 mt-4 text-white font-bold py-2 px-4 rounded"
+						>Embed</button
+					>
 				</div>
-
-
 			{/if}
 
 			{#if !timers?.length}

@@ -7,7 +7,7 @@
 	import utc from 'dayjs/plugin/utc';
 	import DarkmodeToggle from '../../../components/darkmode-toggle.svelte';
 
-    dayjs.extend(utc);
+	dayjs.extend(utc);
 
 	const { page, slug } = data;
 
@@ -72,7 +72,9 @@
 			<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
 		{:then timers}
 			{#if timers?.length}
-				<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow">
+				<div
+					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
+				>
 					{#each timers as timer}
 						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
 							<Timer {timer} />

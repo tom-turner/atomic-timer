@@ -3,9 +3,9 @@ import { DATABASE_URL } from '$env/static/private';
 
 import mysql from 'mysql2/promise';
 
-export async function load({ params, url}) {
+export async function load({ params, url }) {
 	const { slug } = params;
-	const dark = url.searchParams.get('dark') 
+	const dark = url.searchParams.get('dark');
 
 	const db = await mysql.createConnection(DATABASE_URL);
 

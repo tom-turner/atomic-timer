@@ -15,13 +15,11 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs(timer.end).diff(
-		!timer.isRunning ? dayjs(timer.start) : dayjs(),
-	);
+	$: diff = dayjs(timer.end).diff(!timer.isRunning ? dayjs(timer.start) : dayjs());
 
-	console.log('start:',dayjs(timer.start), timer.start)
-	console.log('end:',dayjs(timer.end), timer.end)
-	console.log('now in utc:', dayjs())
+	console.log('start:', dayjs(timer.start), timer.start);
+	console.log('end:', dayjs(timer.end), timer.end);
+	console.log('now in utc:', dayjs());
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();

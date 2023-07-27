@@ -12,7 +12,7 @@
 	const { page, slug, dark } = data;
 
 	if (dark && browser) {
-		document.documentElement.classList.add('dark')
+		document.documentElement.classList.add('dark');
 	}
 
 	$: timers = getTimers();
@@ -38,7 +38,6 @@
 		return res.timers;
 	};
 
-
 	let channel = null;
 	let latency = null;
 
@@ -57,20 +56,20 @@
 	});
 </script>
 
-	<div>
-		{#await timers}
-			<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
-		{:then timers}
-			{#if timers?.length}
-				<div class="flex flex-col space-y-4">
-					{#each timers as timer}
-						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-							<Timer {timer} />
-						</div>
-					{/each}
-				</div>
-			{/if}
-		{:catch error}
-			<p class="text-red-400">{error.message}</p>
-		{/await}
-	</div>
+<div>
+	{#await timers}
+		<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
+	{:then timers}
+		{#if timers?.length}
+			<div class="flex flex-col space-y-4">
+				{#each timers as timer}
+					<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+						<Timer {timer} />
+					</div>
+				{/each}
+			</div>
+		{/if}
+	{:catch error}
+		<p class="text-red-400">{error.message}</p>
+	{/await}
+</div>
