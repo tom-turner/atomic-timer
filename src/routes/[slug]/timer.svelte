@@ -3,9 +3,25 @@
 	import utc from 'dayjs/plugin/utc';
 	import duration from 'dayjs/plugin/duration';
 	import { onMount, beforeUpdate } from 'svelte';
+	import { get } from 'svelte/store';
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
 	dayjs.extend(duration);
+
+	const getUTC = () => {
+		const now = new Date();
+
+		const year = now.getUTCFullYear();
+		const month = now.getUTCMonth() + 1;
+		const day = now.getUTCDate();
+		const hours = now.getUTCHours();
+		const minutes = now.getUTCMinutes();
+		const seconds = now.getUTCSeconds();
+		const milliseconds = now.getUTCMilliseconds();
+
+		return `${year}-${month}-${day} 
+            ${hours}:${minutes}:${seconds}.${milliseconds}`;
+	};
 
 	export let timer = {
 		durationMs: 45000,
@@ -16,10 +32,10 @@
 
 	$: isRunning = timer.isRunning;
 	$: diff = dayjs(timer.end).local().diff(
-		!timer.isRunning ? dayjs(timer.start).local() : dayjs(dayjs().utc().format(mySQLFormat)),
+		!timer.isRunning ? dayjs(timer.start).local() : getUTC(),
 	);
 	
-	console.log(dayjs(timer.end), dayjs(timer.start), dayjs(dayjs().utc().format(mySQLFormat)));
+	console.log(dayjs.utc(timer.end), dayjs.utc(timer.start), getUTC());
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();
