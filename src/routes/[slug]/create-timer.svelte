@@ -69,24 +69,24 @@
 		updateValues();
 	};
 
-	let interval;
-	const run = () => {
-		interval = setInterval(() => {
-			updateValues();
-		}, 500);
-	};
-	const stop = () => {
-		clearInterval(interval);
-	};
-	onMount(() => {
-		stop();
-		run();
-	});
+	// let interval;
+	// const run = () => {
+	// 	interval = setInterval(() => {
+	// 		updateValues();
+	// 	}, 500);
+	// };
+	// const stop = () => {
+	// 	clearInterval(interval);
+	// };
+	// onMount(() => {
+	// 	stop();
+	// 	run();
+	// });
 
-	beforeUpdate(() => {
-		stop();
-		run();
-	});
+	// beforeUpdate(() => {
+	// 	stop();
+	// 	run();
+	// });
 
 	const handleCreateTimer = () => {
 		return fetch(`/api/create-timer`, {
