@@ -106,7 +106,8 @@
 	};
 
 	const handleEmbed = async () => {
-		const url = window.location.href + '/embed';
+		const dark = Array.from(document.documentElement.classList).includes('dark')
+		const url = window.location.href + `/embed${dark ? '?dark=true' : ''}}`;
 		const iframe = `<iframe src="${url}" width="100%" height="100%" frameborder="0"></iframe>`;
 		await navigator.clipboard.writeText(iframe);
 		alert('Copied ' + iframe + ' to clipboard');
