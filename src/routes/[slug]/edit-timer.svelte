@@ -35,35 +35,40 @@
 	};
 
 	const updateValues = () => {
-		values.seconds = dayjs.duration(timer.durationMs).seconds();
-		values.minutes = dayjs.duration(timer.durationMs).minutes();
-		values.hours = dayjs.duration(timer.durationMs).hours();
-		values.days = dayjs.duration(timer.durationMs).days();
-		values.date = dayjs.utc().add(timer.durationMs, 'millisecond').format(dateFormat);
-		values.time = dayjs.utc().add(timer.durationMs, 'millisecond').format(timeFormat);
+		const duration = dayjs.duration(timer.durationMs);
+		const newDateTime = dayjs.utc().add(timer.durationMs, 'millisecond');
+		values.seconds = duration.seconds();
+		values.minutes = duration.minutes();
+		values.hours = duration.hours();
+		values.days = duration.days();
+		values.date = newDateTime.format(dateFormat);
+		values.time = newDateTime.format(timeFormat);
 	};
 
 	const handleInput = (e) => {
 		const value = e.target.value;
 		const name = e.target.id;
+		const currentUTCTime = dayjs.utc().format(mySQLFormat);
 		values[name] = value;
 
-		if (name === 'seconds' || name === 'minutes' || name === 'hours' || name === 'days') {
-			timer.end = dayjs
+		if (['seconds', 'minutes', 'hours', 'days'].includes(name)) {
+			const endTime = dayjs
 				.utc()
 				.add(values.days, 'day')
 				.add(values.hours, 'hour')
 				.add(values.minutes, 'minute')
 				.add(values.seconds, 'second')
 				.format(mySQLFormat);
-			timer.start = dayjs.utc().format(mySQLFormat);
-			timer.durationMs = dayjs.utc(timer.end).diff(dayjs.utc(timer.start), 'millisecond');
+			timer.end = endTime;
+			timer.start = currentUTCTime;
+			timer.durationMs = dayjs.utc(endTime).diff(dayjs.utc(currentUTCTime), 'millisecond');
 		}
 
-		if (name === 'date' || name === 'time') {
-			timer.end = dayjs.utc(`${values.date} ${values.time}`).format(mySQLFormat);
-			timer.start = dayjs.utc().format(mySQLFormat);
-			timer.durationMs = dayjs.utc(timer.end).diff(dayjs.utc(timer.start), 'millisecond');
+		if (['date', 'time'].includes(name)) {
+			const endTime = dayjs.utc(`${values.date} ${values.time}`).format(mySQLFormat);
+			timer.end = endTime;
+			timer.start = currentUTCTime;
+			timer.durationMs = dayjs.utc(timer.end).diff(dayjs.utc(currentUTCTime), 'millisecond');
 		}
 
 		updateValues();
