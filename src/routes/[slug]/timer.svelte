@@ -15,11 +15,11 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs.utc(timer.end).local().diff(
-		!timer.isRunning ? dayjs.utc(timer.start).local() : dayjs().subtract(dayjs().utcOffset(), 'minute'),
+	$: diff = dayjs(timer.end).local().diff(
+		!timer.isRunning ? dayjs(timer.start).local() : dayjs(dayjs().utc().format(mySQLFormat)),
 	);
-
-	console.log(dayjs.utc(timer.end).local(), dayjs.utc(timer.start).local(), dayjs().subtract(dayjs().utcOffset(), 'minute'));
+	
+	console.log(dayjs(timer.end), dayjs(timer.start), dayjs(dayjs().utc().format(mySQLFormat)));
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();
