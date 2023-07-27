@@ -74,6 +74,14 @@
 		updateValues();
 	};
 
+	const handleReset = () => {
+		const currentUTCTime = dayjs.utc().format(mySQLFormat);
+		timer.end = currentUTCTime;
+		timer.start = currentUTCTime;
+		timer.durationMs = 0;
+		updateValues();
+	}; 
+
 	// let interval;
 	// const run = () => {
 	// 	interval = setInterval(() => {
@@ -157,6 +165,9 @@
 					type="time"
 					class="rounded bg-gray-100 dark:bg-neutral-800 dark:text-neutral-100 px-4 py-2"
 				/>
+				<button on:click={handleReset} class="bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-900 text-gray-800 dark:text-neutral-200 font-bold py-2 px-4 rounded">
+					Reset
+				</button>
 			</div>
 			<div class={`flex h-min w-full items-center space-x-2 rounded-xl p-2 text-center`}>
 				<div class="flex flex-col">
