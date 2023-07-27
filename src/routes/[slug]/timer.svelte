@@ -36,8 +36,8 @@
 		!timer.isRunning ? dayjs(timer.start).format(utcFormat) : dayjs.utc().format(utcFormat),
 	);
 	
-	console.log('end:',dayjs(timer.end).format(utcFormat))
-	console.log('start:',dayjs(timer.start).format(utcFormat))
+	console.log('end:',dayjs(timer.end).format(utcFormat), timer.end)
+	console.log('start:',dayjs(timer.start).format(utcFormat), timer.start)
 	console.log('getUtc:',getUTC())
 	console.log('dayjs UTC:',dayjs.utc().format(utcFormat))
 
