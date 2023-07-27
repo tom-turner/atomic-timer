@@ -16,7 +16,7 @@
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs(dayjs(timer.end)).diff(
+	$: diff = dayjs(timer.end).diff(
 		!timer.isRunning ? dayjs(timer.start) : dayjs().utc().format(utcFormat),
 	);
 
