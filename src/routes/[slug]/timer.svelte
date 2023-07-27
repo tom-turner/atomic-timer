@@ -9,15 +9,17 @@
 
 	export let timer = {
 		durationMs: 45000,
-		start: dayjs.utc().format(mySQLFormat),
-		end: dayjs.utc().add(45, 'seconds').format(mySQLFormat),
+		start: dayjs().format(mySQLFormat),
+		end: dayjs().add(45, 'seconds').format(mySQLFormat),
 		isRunning: false
 	};
 
 	$: isRunning = timer.isRunning;
-	$: diff = dayjs(timer.end).diff(
-		!timer.isRunning ? dayjs(timer.start) : dayjs().subtract(dayjs().utcOffset(), 'minute'),
+	$: diff = dayjs.utc(timer.end).local().diff(
+		!timer.isRunning ? dayjs.utc(timer.start).local() : dayjs().subtract(dayjs().utcOffset(), 'minute'),
 	);
+
+	console.log(dayjs.utc(timer.end).local(), dayjs.utc(timer.start).local(), dayjs().subtract(dayjs().utcOffset(), 'minute'));
 
 	$: days = dayjs.duration(diff).days();
 	$: hours = dayjs.duration(diff).hours();
