@@ -3,7 +3,6 @@
 	import utc from 'dayjs/plugin/utc';
 	import duration from 'dayjs/plugin/duration';
 	import { onMount, beforeUpdate } from 'svelte';
-	import { get } from 'svelte/store';
 	const utcFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
 	dayjs.extend(utc);
 	dayjs.extend(duration);
@@ -54,42 +53,42 @@
 <div class="flex space-x-4 w-full justify-center">
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
 		>
-			<p class="text-4xl sm:text-6xl text-gray-800">{days}</p>
+			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{days}</p>
 		</div>
-		<p class="text-sm sm:text-base text-center text-gray-800">Days</p>
+		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Days</p>
 	</div>
 
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
 		>
-			<p class="text-4xl sm:text-6xl text-gray-800">{hours}</p>
+			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{hours}</p>
 		</div>
-		<p class="text-sm sm:text-base text-center text-gray-800">Hours</p>
+		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Hours</p>
 	</div>
 
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
 		>
-			<p class="text-4xl sm:text-6xl text-gray-800">{minutes}</p>
+			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{minutes}</p>
 		</div>
-		<p class="text-sm sm:text-base text-center text-gray-800">Minutes</p>
+		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Minutes</p>
 	</div>
 
 	<div class="flex flex-col">
 		<div
-			class="flex relative items-center justify-center bg-gray-100 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex relative items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
 		>
-			<p class="text-4xl sm:text-6xl text-gray-800">{seconds}</p>
+			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{seconds}</p>
 			{#if milliseconds}
-				<p class=" font-semibold text-gray-800 w-4 h-12">
+				<p class=" font-semibold text-gray-800 dark:text-neutral-200 w-4 h-12">
 					.{Math.abs(milliseconds).toString().split('').splice(0, 1).join('')}
 				</p>
 			{/if}
 		</div>
-		<p class="text-sm sm:text-base text-center text-gray-800">Seconds</p>
+		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Seconds</p>
 	</div>
 </div>

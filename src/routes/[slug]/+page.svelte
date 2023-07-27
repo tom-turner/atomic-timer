@@ -8,6 +8,7 @@
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import Button from '../../components/button.svelte';
+	import DarkmodeToggle from '../../components/darkmode-toggle.svelte';
 
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
@@ -33,8 +34,6 @@
 			if (res.status !== 200) return alert(res.statusText);
 			return res.json();
 		});
-
-		console.log(res.timers);
 
 		return res.timers;
 	};
@@ -101,9 +100,16 @@
 	};
 
 	const handleShare = async () => {
-		const url = window.location.href;
+		const url = window.location.href + '/share';
 		await navigator.clipboard.writeText(url);
 		alert('Copied ' + url + ' to clipboard');
+	};
+
+	const handleEmbed = async () => {
+		const url = window.location.href + '/embed';
+		const iframe = `<iframe src="${url}" width="100%" height="100%" frameborder="0"></iframe>`;
+		await navigator.clipboard.writeText(iframe);
+		alert('Copied ' + iframe + ' to clipboard');
 	};
 
 	let channel = null;
@@ -124,8 +130,9 @@
 	});
 </script>
 
+<DarkmodeToggle />
 <main class="flex flex-col items-center justify-between w-full h-screen space-y-8 p-8">
-	<div class="fixed inset-0 -z-50 bg-white">
+	<div class="fixed inset-0 -z-50 bg-white dark:bg-black">
 		<img
 			src={'https://source.unsplash.com/random/1920x1080?landscape'}
 			class=" -z-40 w-full h-screen opacity-80 object-cover"
@@ -143,7 +150,7 @@
 			<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
 		{:then timers}
 			{#if timers?.length}
-				<div class="flex flex-col space-y-4 bg-gray-100 p-8 rounded-xl bg-opacity-50 shadow">
+				<div class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow">
 					{#each timers as timer}
 						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
 							<Timer {timer} />
@@ -172,11 +179,18 @@
 						</div>
 					{/each}
 				</div>
-				<button
-					on:click={handleShare}
-					class="bg-sky-400 hover:bg-sky-500 mx-auto flex mt-4 text-white font-bold py-2 px-4 rounded"
-					>Share</button
-				>
+				<div class="flex space-x-4 w-full items-center justify-center">
+					<button
+						on:click={handleShare}
+						class="bg-sky-400 hover:bg-sky-500 mt-4 text-white font-bold py-2 px-4 rounded"
+						>Share</button>
+
+					<button on:click={handleEmbed} class="bg-indigo-400 hover:bg-indigo-500 mt-4 text-white font-bold py-2 px-4 rounded"
+						>Embed</button>
+
+				</div>
+
+
 			{/if}
 
 			{#if !timers?.length}
