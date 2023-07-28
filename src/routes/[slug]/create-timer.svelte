@@ -30,13 +30,13 @@
 		minutes: 0,
 		hours: 0,
 		days: 0,
-		date: dayjs.utc().format(dateFormat),
-		time: dayjs.utc().format(timeFormat)
+		date: dayjs().format(dateFormat),
+		time: dayjs().format(timeFormat)
 	};
 
 	const updateValues = () => {
 		const duration = dayjs.duration(timer.durationMs);
-		const newDateTime = dayjs.utc().add(timer.durationMs, 'millisecond');
+		const newDateTime = dayjs().add(timer.durationMs, 'millisecond');
 		values.seconds = duration.seconds();
 		values.minutes = duration.minutes();
 		values.hours = duration.hours();
@@ -49,9 +49,11 @@
 		const value = e.target.value;
 		const name = e.target.id;
 		const currentUTCTime = dayjs.utc().format(mySQLFormat);
-		values[name] = value;
+		const max = e.target.max || Infinity;
+		const min = e.target.min || 0;
 
 		if (['seconds', 'minutes', 'hours', 'days'].includes(name)) {
+			values[name] = Math.max(Math.min(value, max), min);
 			const endTime = dayjs
 				.utc()
 				.add(values.days, 'day')
@@ -65,6 +67,7 @@
 		}
 
 		if (['date', 'time'].includes(name)) {
+			values[name] = value;
 			const endTime = dayjs.utc(`${values.date} ${values.time}`).format(mySQLFormat);
 			timer.end = endTime;
 			timer.start = currentUTCTime;
