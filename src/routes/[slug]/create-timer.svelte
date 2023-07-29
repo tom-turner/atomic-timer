@@ -127,7 +127,7 @@
 			.then(async (res) => {
 				if (res.status !== 200) {
 					const body = await res.json();
-					return alert(body.message || res.statusText);
+					throw new Error(body.message || res.statusText);
 				}
 
 				return res.json();

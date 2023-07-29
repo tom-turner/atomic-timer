@@ -6,7 +6,12 @@
 
 	const handleClick = async () => {
 		loading = true;
-		await onClick();
+		try {
+			await onClick()
+		} catch (e) {
+			console.error(e);
+			alert(e)
+		}
 		loading = false;
 	};
 </script>

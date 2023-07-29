@@ -10,8 +10,6 @@ export async function POST({ request }) {
 		throw error(400, 'Missing slug');
 	}
 
-	console.log(id, slug, timer, pusherData);
-
 	if (!timer || !timer.durationMs || !timer.start || !timer.end) {
 		throw error(400, 'Missing timer');
 	}
@@ -21,7 +19,6 @@ export async function POST({ request }) {
 	const [rows] = await db.execute('SELECT * FROM pages WHERE slug = ?', [slug]);
 
 	const page = rows[0];
-	console.log(page);
 
 	if (!page) {
 		throw error(404, 'Page not found');
