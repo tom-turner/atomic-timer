@@ -7,13 +7,20 @@
 	import EditTimer from './edit-timer.svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
+	import advancedFormat from 'dayjs/plugin/advancedFormat';
+
 	import Button from '../../components/button.svelte';
 	import DarkmodeToggle from '../../components/darkmode-toggle.svelte';
+	import UploadPhoto from '../../components/upload-photo.svelte';	
+	import ResetPage from '../../components/reset-page.svelte';
 
 	const mySQLFormat = 'YYYY-MM-DD HH:mm:ss';
 	dayjs.extend(utc);
+	dayjs.extend(advancedFormat);
 
 	const { page, slug } = data;
+
+	let backgroundImage = page.image || 'https://source.unsplash.com/random/1920x1080?epic,landscape';
 
 	$: timers = getTimers();
 
@@ -131,11 +138,15 @@
 	});
 </script>
 
-<DarkmodeToggle />
+<div class="absolute top-0 right-0 mx-4 mt-2 flex space-x-1">
+	<ResetPage />
+	<UploadPhoto onLoad={(e) => backgroundImage = e} page={page} />
+	<DarkmodeToggle />
+</div>
 <main class="flex flex-col items-center justify-between w-full h-screen space-y-8 p-8">
 	<div class="fixed inset-0 -z-50 bg-white dark:bg-black">
 		<img
-			src={'https://source.unsplash.com/random/1920x1080?landscape'}
+			src={backgroundImage}
 			class=" -z-40 w-full h-screen opacity-80 object-cover"
 			alt="random"
 		/>
@@ -155,6 +166,9 @@
 					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
 				>
 					{#each timers as timer}
+						{#if timer.isRunning}
+							<p class="dark:text-neutral-100 text-center text-xs font-semibold bg-gray-100 dark:bg-neutral-800 mx-auto py-2 px-4 rounded-xl">{dayjs(timer.end).format('h:mm:ssa')} {dayjs(timer.end).format('Do')} of {dayjs(timer.end).format('MMMM')}</p>
+						{/if}
 						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
 							<Timer {timer} />
 							<div class="flex w-full justify-evenly space-x-2 sm:space-x-0 flex-row sm:flex-col">
@@ -162,7 +176,7 @@
 									<Button
 										onClick={() => stopTimer(timer.id, timer.durationMs)}
 										className="bg-yellow-400 hover:bg-yellow-500 w-full text-white my-auto font-bold py-2 px-4 rounded"
-										text="Stop"
+										text="Reset"
 									/>
 								{:else}
 									<Button

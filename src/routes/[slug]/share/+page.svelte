@@ -10,7 +10,7 @@
 	dayjs.extend(utc);
 
 	const { page, slug } = data;
-
+	const image = page.image || 'https://source.unsplash.com/random/1920x1080?epic,landscape';
 	$: timers = getTimers();
 
 	const updateTimers = (e) => {
@@ -52,11 +52,13 @@
 	});
 </script>
 
-<DarkmodeToggle />
+<div class="absolute top-0 right-0 mx-4 mt-2 flex space-x-1">
+	<DarkmodeToggle />
+</div>
 <main class="flex flex-col items-center justify-between w-full h-screen space-y-8 p-8">
 	<div class="fixed inset-0 -z-50 bg-white dark:bg-black">
 		<img
-			src={'https://source.unsplash.com/random/1920x1080?landscape'}
+			src={image}
 			class=" -z-40 w-full h-screen opacity-80 object-cover"
 			alt="random"
 		/>

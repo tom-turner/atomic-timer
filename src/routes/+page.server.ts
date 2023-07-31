@@ -9,12 +9,17 @@ const generateUUID = (length = 12) => {
 	return uuid;
 };
 
-export async function load({ cookies }) {
-	let slug = cookies.get('timer-slug');
+export async function load({ cookies, url }) {
+	const reset = url.searchParams.get('reset') === 'true';
+	if (reset) {
+		cookies.delete('slug');
+	}
+
+	let slug = cookies.get('slug');
 
 	if (!slug) {
 		slug = generateUUID();
-		cookies.set('timer-slug', slug);
+		cookies.set('slug', slug);
 	}
 
 	throw redirect(307, `/${slug}`);

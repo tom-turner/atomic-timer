@@ -23,7 +23,7 @@
 
 <button
 	on:click={handleToggle}
-	class="absolute bg-white bg-opacity-50 dark:bg-neutral-700 w-12 h-6 top-0 right-0 rounded-full shadow-inner mt-2 mx-4"
+	class="bg-white bg-opacity-50 dark:bg-neutral-700 w-12 h-6 rounded-full shadow-inner"
 >
 	<div
 		class={` w-6 h-6 aspect-square transition-all rounded-full inner-shadow
