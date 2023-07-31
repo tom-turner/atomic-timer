@@ -35,8 +35,17 @@
 	};
 
 	const updateValues = () => {
-		const duration = dayjs.duration(timer.durationMs);
-		const newDateTime = dayjs().add(timer.durationMs, 'millisecond');
+		let newDateTime = dayjs();
+		let duration = dayjs.duration(0);
+		
+		if(timer.isRunning) {
+			newDateTime = dayjs(timer.end)
+			duration = dayjs.duration(dayjs(timer.end).diff(dayjs(), 'millisecond'));
+		} else {
+			newDateTime = dayjs().add(timer.durationMs, 'millisecond');
+			duration = dayjs.duration(timer.durationMs);
+		}
+			
 		values.seconds = duration.seconds();
 		values.minutes = duration.minutes();
 		values.hours = duration.hours();
@@ -48,31 +57,27 @@
 	const handleInput = (e) => {
 		const value = e.target.value;
 		const name = e.target.id;
-		const currentUTCTime = dayjs.utc().format(mySQLFormat);
+		const now = dayjs().format(mySQLFormat);
 		const max = e.target.max || Infinity;
 		const min = e.target.min || 0;
 
 		if (['seconds', 'minutes', 'hours', 'days'].includes(name)) {
 			values[name] = Math.max(Math.min(value, max), min);
-			const endTime = dayjs
-				.utc()
+			timer.isRunning = false;
+			timer.end = dayjs()
 				.add(values.days, 'day')
 				.add(values.hours, 'hour')
 				.add(values.minutes, 'minute')
-				.add(values.seconds, 'second')
-				.format(mySQLFormat);
-			timer.end = endTime;
-			timer.start = currentUTCTime;
-			timer.durationMs = dayjs.utc(endTime).diff(dayjs.utc(currentUTCTime), 'millisecond');
+				.add(values.seconds, 'second').format(mySQLFormat);
 		}
 
 		if (['date', 'time'].includes(name)) {
 			values[name] = value;
-			const endTime = dayjs.utc(`${values.date} ${values.time}`).format(mySQLFormat);
-			timer.end = endTime;
-			timer.start = currentUTCTime;
-			timer.durationMs = dayjs.utc(timer.end).diff(dayjs.utc(currentUTCTime), 'millisecond');
+			timer.isRunning = true;
+			timer.end = dayjs(`${values.date} ${values.time}`).format(mySQLFormat);
 		}
+		timer.start = now;
+		timer.durationMs = dayjs(timer.end).diff(timer.start, 'millisecond');
 
 		updateValues();
 	};
@@ -82,27 +87,28 @@
 		timer.end = currentUTCTime;
 		timer.start = currentUTCTime;
 		timer.durationMs = 0;
+		timer.isRunning = false;
 		updateValues();
 	}; 
 
-	// let interval;
-	// const run = () => {
-	// 	interval = setInterval(() => {
-	// 		updateValues();
-	// 	}, 500);
-	// };
-	// const stop = () => {
-	// 	clearInterval(interval);
-	// };
-	// onMount(() => {
-	// 	stop();
-	// 	run();
-	// });
+	let interval;
+	const run = () => {
+		interval = setInterval(() => {
+				updateValues();
+		}, 1000);
+	};
+	const stop = () => {
+		clearInterval(interval);
+	};
+	onMount(() => {
+		stop();
+		run();
+	});
 
-	// beforeUpdate(() => {
-	// 	stop();
-	// 	run();
-	// });
+	beforeUpdate(() => {
+		stop();
+		run();
+	});
 
 	const handleCreateTimer = () => {
 		return fetch(`/api/create-timer`, {
@@ -112,9 +118,9 @@
 			},
 			body: JSON.stringify({
 				timer: {
-					durationMs: timer.durationMs,
-					start: dayjs(timer.start).format(mySQLFormat),
-					end: dayjs(timer.end).format(mySQLFormat),
+					durationMs: dayjs(timer.end).diff(timer.start, 'millisecond'),
+					start: dayjs(timer.start).utc().format(mySQLFormat),
+					end: dayjs(timer.end).utc().format(mySQLFormat),
 					isRunning: timer.isRunning
 				},
 				slug,

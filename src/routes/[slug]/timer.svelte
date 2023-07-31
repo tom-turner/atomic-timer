@@ -1,10 +1,8 @@
 <script>
 	import dayjs from 'dayjs';
-	import utc from 'dayjs/plugin/utc';
 	import duration from 'dayjs/plugin/duration';
 	import { onMount, beforeUpdate } from 'svelte';
 	const utcFormat = 'YYYY-MM-DD HH:mm:ss.SSS';
-	dayjs.extend(utc);
 	dayjs.extend(duration);
 
 	export let timer = {
@@ -14,7 +12,6 @@
 		isRunning: false
 	};
 
-	$: isRunning = timer.isRunning;
 	$: diff = dayjs(timer.end).diff(!timer.isRunning ? dayjs(timer.start) : dayjs());
 
 	console.log('start:', dayjs(timer.start), timer.start);

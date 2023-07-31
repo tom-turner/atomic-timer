@@ -24,10 +24,11 @@ export async function POST({ request }) {
 		throw error(404, 'Page not found');
 	}
 
-	await db.execute('UPDATE timers SET durationMs = ?, start = ?, end = ? WHERE id = ?', [
+	await db.execute('UPDATE timers SET durationMs = ?, start = ?, end = ?, isRunning = ? WHERE id = ?', [
 		timer.durationMs,
 		timer.start,
 		timer.end,
+		timer.isRunning,
 		id
 	]);
 

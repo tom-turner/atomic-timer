@@ -23,8 +23,8 @@ export async function POST({ request, cookies }) {
 	}
 
 	const [inserted] = await db.execute(
-		'INSERT INTO timers (pageId, durationMs, start, end, isRunning) VALUES (?, ?, ?, ?, 0)',
-		[page.id, timer.durationMs, timer.start, timer.end]
+		'INSERT INTO timers (pageId, durationMs, start, end, isRunning) VALUES (?, ?, ?, ?, ?)',
+		[page.id, timer.durationMs, timer.start, timer.end, timer.isRunning]
 	);
 
 	const [timers] = await db.execute('SELECT * FROM timers WHERE pageId = ?', [page.id]);
