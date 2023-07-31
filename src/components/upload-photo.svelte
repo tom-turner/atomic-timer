@@ -53,7 +53,7 @@
     title="Upload Page Photo"
 	class=" rounded-full bg-white bg-opacity-50 dark:bg-neutral-700 dark:text-neutral-100 px-2 text-xs font-semibold shadow-inner flex items-center justify-center truncate"
 >
-☁
+✏️ 
 </button>
 
 <form action="/uploadPhoto" method="post" enctype="multipart/form-data" class="z-50 hidden">
