@@ -7,10 +7,10 @@
 	const handleClick = async () => {
 		loading = true;
 		try {
-			await onClick()
+			await onClick();
 		} catch (e) {
 			console.error(e);
-			alert(e)
+			alert(e);
 		}
 		loading = false;
 	};

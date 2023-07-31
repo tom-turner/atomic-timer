@@ -26,6 +26,7 @@ export async function load({ params, url }) {
 	};
 
 	const page = await getPage();
+	delete page.image;
 
 	return {
 		slug,

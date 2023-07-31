@@ -45,7 +45,7 @@
 	});
 </script>
 
-<div class="flex space-x-3 sm:space-x-4 w-full justify-center ">
+<div class="flex space-x-3 sm:space-x-4 w-full justify-center">
 	<div class="flex flex-col">
 		<div
 			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"

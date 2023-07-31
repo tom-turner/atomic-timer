@@ -2,15 +2,19 @@
 	export let data;
 	import { onMount } from 'svelte';
 	import pusher from '../pusherInstance';
-	import Timer from '../timer.svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import DarkmodeToggle from '../../../components/darkmode-toggle.svelte';
 
+	import Timer from '../../../components/timer.svelte';
+	import Heading from '../../../components/heading.svelte';
+	import Footer from '../../../components/footer.svelte';
+	import Background from '../../../components/background.svelte';
+
 	dayjs.extend(utc);
 
 	const { page, slug } = data;
-	const image = page.image || 'https://source.unsplash.com/random/1920x1080?epic,landscape';
+	const backgroundImage = page.image;
 	$: timers = getTimers();
 
 	const updateTimers = (e) => {
@@ -56,19 +60,8 @@
 	<DarkmodeToggle />
 </div>
 <main class="flex flex-col items-center justify-between w-full h-screen space-y-8 p-8">
-	<div class="fixed inset-0 -z-50 bg-white dark:bg-black">
-		<img
-			src={image}
-			class=" -z-40 w-full h-screen opacity-80 object-cover"
-			alt="random"
-		/>
-	</div>
-
-	<div class="text-center text-white text-shadow">
-		<p class="text-2xl sm:text-4xl font-semibold">Cloud-Synchronized</p>
-		<h1 class="heading">Atomic Timer ⚛️</h1>
-	</div>
-
+	<Background image={backgroundImage} />
+	<Heading />
 	<div>
 		{#await timers}
 			<p class="text-5xl animate-spin font-semibold text-center my-auto">🕣</p>
@@ -88,30 +81,5 @@
 			<p class="text-red-400">{error.message}</p>
 		{/await}
 	</div>
-
-	<div class="text-center text-white font-semibold text-sm text-shadow">
-		<a class="hover:underline text-sky-400" href="https://ttcreative.limited" target="_blank"
-			>TT Creative</a
-		>
-		<p>Created by Tom Turner</p>
-		<p>Latency: {latency ? latency + 'ms' : 'N/A'}</p>
-	</div>
+	<Footer {latency} />
 </main>
-
-<style>
-	.heading {
-		font-size: 4rem;
-		color: white;
-		font-weight: 700;
-	}
-
-	@media (max-width: 640px) {
-		.heading {
-			font-size: 2.5rem;
-		}
-	}
-
-	.text-shadow {
-		text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-	}
-</style>

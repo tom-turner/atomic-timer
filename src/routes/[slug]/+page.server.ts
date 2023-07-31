@@ -24,10 +24,10 @@ export async function load({ params }) {
 	};
 
 	const page = await getPage();
-		
+
 	return {
 		slug,
-		page:{
+		page: {
 			...page,
 			image: page.image?.toString()
 		}

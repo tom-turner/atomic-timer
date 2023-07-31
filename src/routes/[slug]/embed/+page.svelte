@@ -2,7 +2,7 @@
 	export let data;
 	import { onMount } from 'svelte';
 	import pusher from '../pusherInstance';
-	import Timer from '../timer.svelte';
+	import Timer from '../../../components/timer.svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import { browser } from '$app/environment';

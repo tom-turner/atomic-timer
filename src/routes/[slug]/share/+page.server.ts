@@ -27,9 +27,9 @@ export async function load({ params }) {
 
 	return {
 		slug,
-		page : {
+		page: {
 			...page,
-			image : page.image?.toString()
+			image: page.image?.toString()
 		}
 	};
 }

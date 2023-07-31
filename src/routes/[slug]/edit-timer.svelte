@@ -35,19 +35,18 @@
 		time: dayjs().format(timeFormat)
 	};
 
-	
 	const updateValues = () => {
 		let newDateTime = dayjs();
 		let duration = dayjs.duration(0);
-		
-		if(timer.isRunning) {
-			newDateTime = dayjs(timer.end)
+
+		if (timer.isRunning) {
+			newDateTime = dayjs(timer.end);
 			duration = dayjs.duration(dayjs(timer.end).diff(dayjs(), 'millisecond'));
 		} else {
 			newDateTime = dayjs().add(timer.durationMs, 'millisecond');
 			duration = dayjs.duration(timer.durationMs);
 		}
-			
+
 		values.seconds = duration.seconds();
 		values.minutes = duration.minutes();
 		values.hours = duration.hours();
@@ -70,7 +69,8 @@
 				.add(values.days, 'day')
 				.add(values.hours, 'hour')
 				.add(values.minutes, 'minute')
-				.add(values.seconds, 'second').format(mySQLFormat);
+				.add(values.seconds, 'second')
+				.format(mySQLFormat);
 		}
 
 		if (['date', 'time'].includes(name)) {
@@ -91,12 +91,12 @@
 		timer.durationMs = 0;
 		timer.isRunning = false;
 		updateValues();
-	}; 
+	};
 
 	let interval;
 	const run = () => {
 		interval = setInterval(() => {
-				updateValues();
+			updateValues();
 		}, 1000);
 	};
 	const stop = () => {
@@ -176,7 +176,10 @@
 					type="time"
 					class="rounded bg-gray-100 dark:bg-neutral-800 dark:text-neutral-100 px-4 py-2"
 				/>
-				<button on:click={handleReset} class="bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-900 text-gray-800 dark:text-neutral-200 font-bold py-2 px-4 rounded">
+				<button
+					on:click={handleReset}
+					class="bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-900 text-gray-800 dark:text-neutral-200 font-bold py-2 px-4 rounded"
+				>
 					Reset
 				</button>
 			</div>
