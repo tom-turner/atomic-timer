@@ -45,10 +45,10 @@
 	});
 </script>
 
-<div class="flex space-x-4 w-full justify-center">
+<div class="flex space-x-3 sm:space-x-4 w-full justify-center ">
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
 		>
 			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{days}</p>
 		</div>
@@ -57,7 +57,7 @@
 
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
 		>
 			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{hours}</p>
 		</div>
@@ -66,7 +66,7 @@
 
 	<div class="flex flex-col">
 		<div
-			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
 		>
 			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{minutes}</p>
 		</div>
@@ -75,7 +75,7 @@
 
 	<div class="flex flex-col">
 		<div
-			class="flex relative items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square"
+			class="flex relative items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
 		>
 			<p class="text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200">{seconds}</p>
 			{#if milliseconds}

@@ -65,7 +65,7 @@
 	</div>
 
 	<div class="text-center text-white text-shadow">
-		<p class="text-4xl font-semibold">Cloud-Synchronized</p>
+		<p class="text-2xl sm:text-4xl font-semibold">Cloud-Synchronized</p>
 		<h1 class="heading">Atomic Timer ⚛️</h1>
 	</div>
 
@@ -75,7 +75,7 @@
 		{:then timers}
 			{#if timers?.length}
 				<div
-					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
+					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-2 sm:p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
 				>
 					{#each timers as timer}
 						<div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
@@ -103,6 +103,12 @@
 		font-size: 4rem;
 		color: white;
 		font-weight: 700;
+	}
+
+	@media (max-width: 640px) {
+		.heading {
+			font-size: 2.5rem;
+		}
 	}
 
 	.text-shadow {

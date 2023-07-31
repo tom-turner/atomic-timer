@@ -158,7 +158,7 @@
 		}`}
 	>
 		<button class="fixed inset-0 bg-white dark:bg-black opacity-50 dark:opacity-50 w-full h-full" />
-		<div class="flex flex-col space-y-2 z-0">
+		<div class="flex flex-col space-y-2 z-0 overflow-hidden px-4">
 			<div class={`flex h-min w-full items-center justify-center space-x-2 rounded-xl p-2 `}>
 				<input
 					on:input={handleInput}
@@ -178,7 +178,7 @@
 					Reset
 				</button>
 			</div>
-			<div class={`flex h-min w-full items-center space-x-2 rounded-xl p-2 text-center`}>
+			<div class={`flex h-min w-full items-center justify-center space-x-2 rounded-xl p-2 text-center`}>
 				<div class="flex flex-col">
 					<input
 						on:input={handleInput}
@@ -186,7 +186,7 @@
 						id="days"
 						type="number"
 						min="0"
-						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
+						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
 					/>
 					<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Days</p>
 				</div>
@@ -198,7 +198,7 @@
 						type="number"
 						min="0"
 						max="23"
-						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
+						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
 					/>
 					<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Hours</p>
 				</div>
@@ -211,7 +211,7 @@
 						type="number"
 						min="0"
 						max="59"
-						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
+						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
 					/>
 					<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">
 						Minutes
@@ -226,7 +226,7 @@
 						type="number"
 						min="0"
 						max="59"
-						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-24 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
+						class="flex text-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square text-4xl sm:text-6xl text-gray-800 dark:text-neutral-200"
 					/>
 					<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">
 						Seconds

@@ -138,7 +138,7 @@
 	});
 </script>
 
-<div class="absolute top-0 right-0 mx-4 mt-2 flex space-x-1">
+<div class="absolute top-0 right-0 mx-4 my-2 flex space-x-1">
 	<ResetPage />
 	<UploadPhoto onLoad={(e) => backgroundImage = e} page={page} />
 	<DarkmodeToggle />
@@ -153,8 +153,8 @@
 	</div>
 
 	<div class="text-center text-white text-shadow">
-		<p class="text-4xl font-semibold">Cloud-Synchronized</p>
-		<h1 class="heading">Atomic Timer ⚛️</h1>
+		<p class="text-2xl sm:text-4xl font-semibold">Cloud-Synchronized</p>
+		<h1 class="heading ">Atomic Timer ⚛️</h1>
 	</div>
 
 	<div>
@@ -163,7 +163,7 @@
 		{:then timers}
 			{#if timers?.length}
 				<div
-					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
+					class="flex flex-col space-y-4 bg-gray-100 dark:bg-neutral-700 p-2 sm:p-8 rounded-xl bg-opacity-50 dark:bg-opacity-50 shadow"
 				>
 					{#each timers as timer}
 						{#if timer.isRunning}
@@ -232,6 +232,12 @@
 		font-size: 4rem;
 		color: white;
 		font-weight: 700;
+	}
+
+	@media (max-width: 640px) {
+		.heading {
+			font-size: 2.5rem;
+		}
 	}
 
 	.text-shadow {
