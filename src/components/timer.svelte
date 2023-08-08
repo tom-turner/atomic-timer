@@ -18,11 +18,11 @@
 	console.log('end:', dayjs(timer.end), timer.end);
 	console.log('now in utc:', dayjs());
 
-	$: days = dayjs.duration(diff).days();
-	$: hours = dayjs.duration(diff).hours();
-	$: minutes = dayjs.duration(diff).minutes();
-	$: seconds = dayjs.duration(diff).seconds();
-	$: milliseconds = dayjs.duration(diff).milliseconds();
+	$: days = Math.max( 0, dayjs.duration(diff).days());
+	$: hours =  Math.max( 0, dayjs.duration(diff).hours());
+	$: minutes =  Math.max( 0, dayjs.duration(diff).minutes());
+	$: seconds =  Math.max( 0, dayjs.duration(diff).seconds());
+	$: milliseconds = Math.max( 0,  dayjs.duration(diff).milliseconds());
 	let interval;
 	const run = () => {
 		if (timer.isRunning) {
@@ -46,6 +46,7 @@
 </script>
 
 <div class="flex space-x-3 sm:space-x-4 w-full justify-center">
+	{#if days > 0}
 	<div class="flex flex-col">
 		<div
 			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
@@ -54,7 +55,9 @@
 		</div>
 		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Days</p>
 	</div>
+	{/if}
 
+	{#if hours > 0}
 	<div class="flex flex-col">
 		<div
 			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
@@ -63,7 +66,9 @@
 		</div>
 		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Hours</p>
 	</div>
+	{/if}
 
+	{#if minutes > 0}
 	<div class="flex flex-col">
 		<div
 			class="flex items-center justify-center bg-gray-100 dark:bg-neutral-800 shadow rounded-xl w-20 sm:w-32 aspect-square"
@@ -72,6 +77,7 @@
 		</div>
 		<p class="text-sm sm:text-base text-center text-gray-800 dark:text-neutral-200">Minutes</p>
 	</div>
+	{/if}
 
 	<div class="flex flex-col">
 		<div

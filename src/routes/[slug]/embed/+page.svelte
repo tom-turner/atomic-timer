@@ -1,7 +1,7 @@
 <script>
 	export let data;
 	import { onMount } from 'svelte';
-	import pusher from '../pusherInstance';
+	import pusher from '../../../lib/pusherInstance';
 	import Timer from '../../../components/timer.svelte';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
